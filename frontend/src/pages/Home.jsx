@@ -21,8 +21,8 @@ function Home() {
             </nav>
             <div className='w-full h-full'>
                 <div className='h-full w-72 border bg-slate-600'>
-                    <ul>
-                        <li><button><HiHome/></button><span>Home</span></li>
+                    <ul className='w-full flex flex-col pl-5 pr-5'>
+                        <li className='flex gap-5 w-full h-16 items-center'><button><HiHome size={'30px'} color={'#ffffff'}/></button><span className='text-xl text-white'>Home</span></li>
                         <li><button><MdOutlineVideoLibrary/></button><span>Shorts</span></li>
                         <li><button><MdSubscriptions/></button><span>Subscription</span></li>
                     </ul>
