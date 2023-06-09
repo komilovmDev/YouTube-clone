@@ -1,10 +1,40 @@
 import { AiOutlineSearch } from 'react-icons/ai'
-import {HiHome} from 'react-icons/hi'
-import {MdVideoLibrary , MdSubscriptions , MdOutlineVideoLibrary , MdOutlineHistory} from 'react-icons/md'
-import {RiVideoLine} from 'react-icons/ri'
-import {BiTimeFive , BiLike, BiTime} from 'react-icons/bi'
+import { HiHome } from 'react-icons/hi'
+import { MdVideoLibrary, MdSubscriptions, MdOutlineVideoLibrary, MdOutlineHistory } from 'react-icons/md'
+import { RiVideoLine } from 'react-icons/ri'
+import { BiTimeFive, BiLike, BiTime } from 'react-icons/bi'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 
 function Home() {
+
+    const [videos, setVideos] = useState([]);
+
+    async function getVideos() {
+        try {
+            const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+                params: {
+                    key: 'AIzaSyCEdnM6zqLNB4ouG0hVEWEIKc38CTvvqts',
+                    part: 'snippet',
+                    type: 'video',
+                    q: 'search_query',
+                },
+            });
+            console.log(response.data.items);
+            console.log(response.data.items.snippet.thumbnails);
+            setVideos(response.data.items);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    useEffect(() => {
+        getVideos();
+    }, []);
+
+
+
     return (
         <div className="flex w-full h-full flex-col">
             <nav className="w-full h-16 border flex justify-between pl-8 pr-8 items-center">
@@ -12,7 +42,7 @@ function Home() {
                     <img className="w-32" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/2560px-YouTube_Logo_2017.svg.png" alt="" />
                 </div>
                 <div className='flex w-96 border justify-center items-center rounded-3xl p-1'>
-                    <input type="text" className='flex-1 border-none focus:outline-none' />
+                    <input placeholder='serach' type="text" className='flex-1 border-none focus:outline-none' />
                     <button className='w-8 pl-2'><AiOutlineSearch /></button>
                 </div>
                 <div className='h-full flex items-center justify-center'>
@@ -20,33 +50,38 @@ function Home() {
                 </div>
             </nav>
             <div className='w-full h-full'>
-                <div className='h-full w-72 border bg-slate-600'>
-                    <ul className='w-full flex flex-col pl-5 pr-5'>
-                        <li className='flex gap-5 w-full h-16 items-center'><button><HiHome size={'30px'} color={'#ffffff'}/></button><span className='text-xl text-white'>Home</span></li>
-                        <li><button><MdOutlineVideoLibrary/></button><span>Shorts</span></li>
-                        <li><button><MdSubscriptions/></button><span>Subscription</span></li>
+                <div className='h-full w-72'>
+                    <ul className='w-full flex flex-col pl-2 pr-2 pt-5 pb-5 border-b border-slate-300'>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><HiHome size={'24px'} color={'#111'} /></button><span className='text-lg text-black'>Home</span></li>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><MdOutlineVideoLibrary color={'#111'} size={'24px'} /></button><span className='text-lg text-black'>Shorts</span></li>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><MdSubscriptions color={'#111'} size={'24px'} /></button><span className='text-lg text-black'>Subscription</span></li>
                     </ul>
-                    <ul>
-                        <li><button><MdVideoLibrary/></button><span>Libray</span></li>
-                        <li><button><MdOutlineHistory/></button><span>Story</span></li>
-                        <li><button><RiVideoLine/></button><span>Your videos</span></li>
-                        <li><button><BiTime/></button><span>Watch Later</span></li>
-                        <li><button><BiLike/></button><span>Liked</span></li>
+                    <ul className='w-full flex flex-col pl-2 pr-2  pt-5 pb-5 border-b border-slate-300'>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><MdVideoLibrary size={'24px'} color={'#111'} /></button><span className='text-lg text-black'>Libray</span></li>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><MdOutlineHistory size={'24px'} color={'#111'} /></button><span className='text-lg text-black'>Story</span></li>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><RiVideoLine size={'24px'} color={'#111'} /></button><span className='text-lg text-black'>Your videos</span></li>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><BiTime size={'24px'} color={'#111'} /></button><span className='text-lg text-black'>Watch Later</span></li>
+                        <li className='flex gap-5 w-full h-10 items-center pr-4 pl-4 hover:bg-slate-200 rounded-lg'><button><BiLike size={'24px'} color={'#111'} /></button><span className='text-lg text-black'>Liked</span></li>
                     </ul>
-                    <ul>
-                        <li><img src="https://yt3.googleusercontent.com/yUWaoReTNy7cBYSeuZDzTPty1LKcmih8p9BZBL-T0X7hDNcvwHMxaqaLIe7iMviA_ygGyb2n=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>SHOH Gaminguz</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/Zhh6IgGmUBnxzFBCaRI9ZLx0FbWIQStxs5H8auojHkQi8Hb1X7nPe8l9YKEiJmKwo07P0FPtjg=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>ALIY PUBGM</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/mMvovaxnq0ykebQFcZv_T5Sm5kji66B_LQjSRXQltfrT8WldPup3m0t67u4ZRef0b9rzrccS0g=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Aslamboi PUBGM</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/S0-Ulumsw0588ELp2HLJwI1OFj2eSHhq1LD1_5tCncsyzbz8V6ataAwu-c8b0gKWyqF4iBvNsw=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Temur Khatamov</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/YDIW2KdeSgbleNYuSUMgEBX5vJHo9kTwfrn_gTZwcT6jaHJyh0W4MIP9EHR9z5eTb6dx6R3ZXw=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>IXA LIVE</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/AOBwaOWuq5DYkvcwt3zWwHLfzIkHJ8qHfs7E5nsXwZ0IYt6W29VIymN1ontGsUO_AJ8ir7g7=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Green71</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/ytc/AGIKgqMRPWtrdfIqqxK3Pae_RlhfiMOlKHOTg4KxU3Ya=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Autotuninguz</span></li>
-                        <li><img src="https://yt3.googleusercontent.com/uUF3pPAlUBu2gufiVSinID9S_t7FamTGaBk8jGCvSSV0cWDcOE67IHTbDitvIhS3puy4LYhm=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>SHOH Gaminguz</span></li>
+                    <ul className='w-full flex flex-col pl-2 pr-2 pt-5 pb-5 border-b border-slate-300'>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/yUWaoReTNy7cBYSeuZDzTPty1LKcmih8p9BZBL-T0X7hDNcvwHMxaqaLIe7iMviA_ygGyb2n=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>SHOH Gaminguz</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/Zhh6IgGmUBnxzFBCaRI9ZLx0FbWIQStxs5H8auojHkQi8Hb1X7nPe8l9YKEiJmKwo07P0FPtjg=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>ALIY PUBGM</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/mMvovaxnq0ykebQFcZv_T5Sm5kji66B_LQjSRXQltfrT8WldPup3m0t67u4ZRef0b9rzrccS0g=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Aslamboi PUBGM</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/S0-Ulumsw0588ELp2HLJwI1OFj2eSHhq1LD1_5tCncsyzbz8V6ataAwu-c8b0gKWyqF4iBvNsw=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Temur Khatamov</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/YDIW2KdeSgbleNYuSUMgEBX5vJHo9kTwfrn_gTZwcT6jaHJyh0W4MIP9EHR9z5eTb6dx6R3ZXw=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>IXA LIVE</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/AOBwaOWuq5DYkvcwt3zWwHLfzIkHJ8qHfs7E5nsXwZ0IYt6W29VIymN1ontGsUO_AJ8ir7g7=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Green71</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/ytc/AGIKgqMRPWtrdfIqqxK3Pae_RlhfiMOlKHOTg4KxU3Ya=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>Autotuninguz</span></li>
+                        <li className='flex flex-row  w-full h-10 items-center gap-5 pl-4 hover:bg-slate-200 rounded-lg'><img className='w-8 rounded-full' src="https://yt3.googleusercontent.com/uUF3pPAlUBu2gufiVSinID9S_t7FamTGaBk8jGCvSSV0cWDcOE67IHTbDitvIhS3puy4LYhm=s176-c-k-c0x00ffffff-no-rj" alt="" /><span>SHOH Gaminguz</span></li>
                     </ul>
                 </div>
                 <div>
-
+                    {
+                        videos.map(item => (
+                            <img src={item.snippet.thumbnails} alt={item.snippet.title} controls />
+                        ))
+                    }
                 </div>
+
             </div>
         </div>
     )
