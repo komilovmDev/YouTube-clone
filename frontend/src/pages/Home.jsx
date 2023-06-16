@@ -18,7 +18,7 @@ function Home() {
                     key: 'AIzaSyCEdnM6zqLNB4ouG0hVEWEIKc38CTvvqts',
                     part: 'snippet',
                     type: 'video',
-                    q: 'search_query',
+                    q: 'search_query',  
                 },
             });
             console.log(response.data.items);
